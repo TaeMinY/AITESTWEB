@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled, { css } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Lottie from "lottie-react";
 import loadingLottie from "../assets/lottie.json";
 
@@ -90,21 +90,37 @@ const Button2 = styled.div`
   font-weight: bold;
   padding-bottom: 2px;
 `;
+const emotionMap = {
+  0: { text: "안정", emoji: "😌" },
+  1: { text: "차분", emoji: "😇" },
+  2: { text: "기쁨", emoji: "😊" },
+  3: { text: "슬픔", emoji: "😢" },
+  4: { text: "화남", emoji: "😡" },
+  5: { text: "두려움", emoji: "😨" },
+  6: { text: "혐오", emoji: "🤢" },
+  7: { text: "놀람", emoji: "😲" }
+};
+
 function Step4() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  // id에 해당하는 감정 상태 가져오기
+  console.log(id)
+  const emotion = emotionMap[id] || { text: "알 수 없음", emoji: "❓" };
 
   return (
     <StepContainer>
       <Title>
         현재 상태는
         <br />
-        화남😡 입니다.
+        {emotion.text} {emotion.emoji} 입니다.
       </Title>
 
       <ButtonContainer>
         <Button2
           onClick={() => {
-            naviagte("/");
+            navigate("/");
           }}
         >
           메인으로
@@ -113,4 +129,5 @@ function Step4() {
     </StepContainer>
   );
 }
+
 export default Step4;

@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <Step3></Step3>,
       },
       {
-        path: "step4",
+        path: "step4/:id",
         element: <Step4></Step4>,
       },
     ],

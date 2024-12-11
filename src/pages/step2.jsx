@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Lottie from "lottie-react";
 import loadingLottie from "../assets/lottie.json";
-import loading from "../assets/loading.png"
+import { useNavigate, useParams } from "react-router-dom";
 const StepContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -91,6 +91,7 @@ function Step2() {
   const [audioBlob, setAudioBlob] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const naviagte = useNavigate();
 
   useEffect(() => {
     // Request microphone access
@@ -160,6 +161,10 @@ function Step2() {
 
       const data = await response.json();
       console.log("분석 결과:", data);
+      naviagte(`/step4/${data.confidence}`)
+
+      
+
     } catch (error) {
       console.error("분석 요청 중 오류 발생:", error);
     } finally {
@@ -173,16 +178,16 @@ function Step2() {
         mediaRecorder.start(); // 녹음을 다시 시작
         setIsRecording(true);
         setAudioBlob(null); // 이전 데이터 초기화
-        console.log("녹음 다시 시작");
       }
     }, 100);
   };
 
   return (
     <StepContainer>
-<Title>
+      <Title>
         {isAnalyzing ? "분석 중..." : isRecording ? "녹음 중" : "녹음 멈춤"}
-      </Title>      <Text>
+      </Title>      
+      <Text>
         목소리를 녹음 후,
         <br />
         분석하기 버튼을 눌러주세요.
